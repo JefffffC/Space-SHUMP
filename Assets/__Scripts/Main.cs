@@ -7,10 +7,18 @@ using UnityEngine.SceneManagement;
 
 public class Main : MonoBehaviour
 {
+
+    static public Main S; // singleton for Main
     private float _tm = 0.0f;
 
-    public float spawnEverySec = 2.0f;
-    public GameObject[] prefabEnemies;
+    public float spawnEverySec = 2.0f; // rate of enemy spawns;
+    public GameObject[] prefabEnemies; // array of prefab enemies
+
+
+    void Awake()
+    {
+        S = this; // in order to set S to refer to specific instance of Main object, do it at the beginning
+    }
 
     // Update is called once per frame
     void Update()
@@ -36,5 +44,16 @@ public class Main : MonoBehaviour
             float xPos = Random.Range(-30, 30);
             Enemy.transform.position = new Vector3(xPos, 45f);
         }
+    }
+
+    public void DelayedRestart(float delay)
+    {
+        //invoke the Restart() method in delay seconds
+        Invoke("Restart", delay);
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene("_Scene_0");
     }
 }
