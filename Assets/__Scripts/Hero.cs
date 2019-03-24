@@ -12,10 +12,21 @@ public class Hero : MonoBehaviour
     public float rollMult = -45;
     public float pitchMult = 30;
     public float gameRestartDelay = 2f;
+    public GameObject projectilePrefab;
+    public float projectileSpeed = 40;
 
     [Header("Set Dynamically")]
     [SerializeField] // forces Unity to still show _shieldLevel despite being private
     private float _shieldLevel = 1;
+
+    public delegate void WeaponFireDelegate(); // declare a new delegate type WeaponFireDelegate
+    public WeaponFireDelegate fireDelegate;
+
+    void Awake()
+    {
+      // fireDelegate += TempFire;
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -44,9 +55,15 @@ public class Hero : MonoBehaviour
         transform.position = pos;
         transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
 
+        //use the fireDelegate to fire weapons, make sure button is pressed, then ensure fireDelegate isn't null to avoid error
+        if (Input.GetAxis("Jump") == 1 && fireDelegate != null) // either space or up arrow
+        {
+            fireDelegate();
+        }
 
-
+ 
     }
+
 
     private GameObject lastTriggerGo = null; // this variable holds a reference to the last triggering GameObject
     void OnTriggerEnter(Collider other)
