@@ -23,7 +23,7 @@ public class BoundsCheck : MonoBehaviour
     }
     void LateUpdate()
     {
-        
+
         Vector3 pos = transform.position;
         isOnScreen = true;
         offRight = offLeft = offDown = offUp = false;
@@ -31,7 +31,7 @@ public class BoundsCheck : MonoBehaviour
         if (pos.x > camWidth - radius)
         {
             pos.x = camWidth - radius;
-           isOnScreen = false;
+            isOnScreen = false;
             offRight = true;
         }
         if (pos.x < -camWidth + radius)
@@ -43,7 +43,7 @@ public class BoundsCheck : MonoBehaviour
         if (pos.y > camHeight - radius)
         {
             pos.y = camWidth - radius;
-             isOnScreen = false;
+            isOnScreen = false;
             offUp = true;
         }
         if (pos.y < -camHeight + radius)
@@ -58,7 +58,7 @@ public class BoundsCheck : MonoBehaviour
         if (keepOnScreen && !isOnScreen)
         {
             transform.position = pos;
-           isOnScreen = true;
+            isOnScreen = true;
             offRight = offLeft = offUp = offDown = false;
         }
     }

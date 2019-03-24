@@ -28,15 +28,15 @@ public class Enemy : MonoBehaviour
 
     void Awake()
     {
-        bndCheck = GetComponent<BoundsCheck>();
+        this.bndCheck = GetComponent<BoundsCheck>();
     }
 
     void Update()
     {
         Move();
-        if (bndCheck != null && bndCheck.offDown || bndCheck.offLeft || bndCheck.offRight)
+        if (this.bndCheck != null && this.bndCheck.offDown || this.bndCheck.offLeft || this.bndCheck.offRight)
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 
@@ -47,6 +47,3 @@ public class Enemy : MonoBehaviour
         pos = tempPos;
     }
 }
-
-
-

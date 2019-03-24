@@ -42,4 +42,3 @@ public class Enemy_2 : Enemy
 
 
 }
-

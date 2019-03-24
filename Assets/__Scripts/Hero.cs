@@ -5,7 +5,7 @@ using UnityEngine;
 public class Hero : MonoBehaviour
 {
     static public Hero S;
-   
+
 
     [Header("Set in the Inspector")]
     public float speed = 30;
@@ -14,18 +14,19 @@ public class Hero : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-      
+
         if (S == null)
         {
-            S = this; 
-        } else
+            S = this;
+        }
+        else
         {
-            Debug.LogError("Hero.Start() - Attempted to Assign Second Hero! "); 
+            Debug.LogError("Hero.Start() - Attempted to Assign Second Hero! ");
 
         }
-      
+
     }
-  
+
     // Update is called once per frame
     void Update()
     {
@@ -38,6 +39,6 @@ public class Hero : MonoBehaviour
         transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
 
 
-      
+
     }
 }

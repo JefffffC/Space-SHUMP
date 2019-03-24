@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 8865730785073486968}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.007036564, y: 0.22113876, z: -0.030755773}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 9040430927657317403}
   - {fileID: 1174201933525629537}
@@ -64,13 +64,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 8865730785073486968}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a0642b1efcf42a43ba5e6de219f758b, type: 3}
+  m_Script: {fileID: 11500000, guid: 79aab7ec360541848932333a3a6b8e6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  fireRate: 0.3
-  health: 10
-  score: 100
+  radius: 1
+  keepOnScreen: 0
+  isOnScreen: 1
+  camWidth: 0
+  camHeight: 0
+  offRight: 0
+  offLeft: 0
+  offUp: 0
+  offDown: 0
 --- !u!114 &992831830654360125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,18 +85,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8865730785073486968}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0305e810f85dd34a861655c59426f8e, type: 3}
+  m_Script: {fileID: 11500000, guid: 340ac40fa430a15488908c7aab6d0724, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 3
-  keepOnScreen: 1
-  isOnScreen: 1
-  camWidth: 3
-  camHeight: 4
-  offRight: 0
-  offLeft: 0
-  offUp: 0
-  offDown: 0
+  fireRate: 0.3
+  health: 10
+  score: 100
 --- !u!1 &8890204398814571712
 GameObject:
   m_ObjectHideFlags: 0
