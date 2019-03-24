@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Enemy_0 : Enemy
 {
-    // Start is called before the first frame update
-    
+    public override void Move()
+    {
+        Vector3 tempPos = pos;
+        tempPos.y -= speed * Time.deltaTime;
+        pos = tempPos;
+    }
 }
