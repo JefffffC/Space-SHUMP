@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class BoundsCheck : MonoBehaviour
 {
-    [Header("Set in Inspector")]
+
     public float radius = 1f;
     public bool keepOnScreen = true;
 
-    [Header("Set Dynamically")]
+
     public bool isOnScreen = true;
     public float camWidth;
     public float camHeight;
@@ -31,7 +31,7 @@ public class BoundsCheck : MonoBehaviour
         if (pos.x > camWidth - radius)
         {
             pos.x = camWidth - radius;
-            isOnScreen = false;
+           isOnScreen = false;
             offRight = true;
         }
         if (pos.x < -camWidth + radius)
@@ -43,7 +43,7 @@ public class BoundsCheck : MonoBehaviour
         if (pos.y > camHeight - radius)
         {
             pos.y = camWidth - radius;
-            isOnScreen = false;
+             isOnScreen = false;
             offUp = true;
         }
         if (pos.y < -camHeight + radius)
@@ -51,13 +51,14 @@ public class BoundsCheck : MonoBehaviour
             pos.y = -camWidth + radius;
             isOnScreen = false;
             offDown = true;
+
         }
 
         isOnScreen = !(offRight || offLeft || offUp || offDown);
         if (keepOnScreen && !isOnScreen)
         {
             transform.position = pos;
-            isOnScreen = true;
+           isOnScreen = true;
             offRight = offLeft = offUp = offDown = false;
         }
     }
