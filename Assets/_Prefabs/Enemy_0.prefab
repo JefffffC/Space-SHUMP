@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRate: 0.3
-  health: 10
+  health: 3
   score: 100
 --- !u!1 &8890204398814571712
 GameObject:

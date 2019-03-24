@@ -40,6 +40,18 @@ public class Weapon : MonoBehaviour
         }
     }
 
+    void Update ()
+    {
+        if (Input.GetButtonDown("Fire3") == true) // if shift key is pressed then weapon is toggled
+        {
+            if (_type == WeaponType.Blaster) // if blaster, toggle to Simple
+            {
+                type = WeaponType.Simple;
+            }
+            else type = WeaponType.Blaster; // otherwise toggle to blaster
+        }
+    }
+
     public WeaponType type
     {
         get

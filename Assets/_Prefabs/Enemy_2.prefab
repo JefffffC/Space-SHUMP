@@ -525,8 +525,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRate: 0.3
-  health: 10
-  score: 100
+  health: 12
+  score: 400
   target: {fileID: 1813119446530210515, guid: 8d97174c1d8ead040a75522209779075, type: 3}
   movementSpeed: 10
   rotationSpeed: 90
