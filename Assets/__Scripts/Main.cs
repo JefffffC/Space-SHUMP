@@ -65,6 +65,7 @@ public class Main : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene("_Scene_0"); // restarts the game by reloading the scene
+        ScoreManage.S.ResetScore(); // resets score on restart
     }
 
     static public WeaponDefinition GetWeaponDefinition (WeaponType wt) //static function which allows other classes to access the data in WEAP_DICT
