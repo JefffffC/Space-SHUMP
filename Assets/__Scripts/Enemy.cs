@@ -83,7 +83,6 @@ public class Enemy : MonoBehaviour
                 if (health <= 0) // destroy enemy if health depleted
                 {
                     Destroy(this.gameObject);
-                    ScoreManage.S.UpdateScore(score);
                 }
                 Destroy(otherGO);
                 break;
