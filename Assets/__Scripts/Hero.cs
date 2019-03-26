@@ -64,7 +64,6 @@ public class Hero : MonoBehaviour
         if (Input.GetButtonDown("Fire3") == true)
         {
             Debug.Log("Weapon switched");
-            ;
         }
     }
 

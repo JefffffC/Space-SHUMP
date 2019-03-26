@@ -91,6 +91,12 @@ MonoBehaviour:
   fireRate: 0.3
   health: 3
   score: 100
+  showDamageDuration: 0.05
+  originalColors: []
+  materials: []
+  showingDamage: 0
+  damageDoneTime: 0
+  notifiedofDestruction: 0
 --- !u!1 &8890204398814571712
 GameObject:
   m_ObjectHideFlags: 0

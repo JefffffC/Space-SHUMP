@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     public float health = 10;
     public int score = 100; //points earned for destroying enemy
 
-    public float showDamageDuration = 0.1f; // # of seconds to show damage indicator
+    public float showDamageDuration = 0.05f; // # of seconds to show damage indicator
 
     [Header("Set Dynamically: Enemy")]
     public Color[] originalColors;
@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour
     public bool notifiedofDestruction = false; // will be used later
 
     private BoundsCheck bndCheck;
+    private bool destroyedFlag = false;
 
     //property: method that acts like a field
     public Vector3 pos
@@ -71,6 +72,7 @@ public class Enemy : MonoBehaviour
         switch (otherGO.tag)
         {
             case "ProjectileHero":
+                Debug.Log("Enemy Projectile Entrance Detected"); // DEBUG MESSAGE
                 Projectile p = otherGO.GetComponent<Projectile>();
                 // if this enemy is off screen, don't damage it
                 if (!bndCheck.isOnScreen)
@@ -83,6 +85,12 @@ public class Enemy : MonoBehaviour
                 if (health <= 0) // destroy enemy if health depleted
                 {
                     Destroy(this.gameObject);
+                    while (destroyedFlag == false) // this loop is a solution to an issue of double-counting the score
+                    {
+                        ScoreManager.SM.updateCurrScore(score); // add to score
+                        destroyedFlag = true; // once an object has been score-updated, it cannot be score-updated again.
+                    }
+                    Debug.Log("Enemy destroyed: " + score); // display debugging score
                 }
                 Destroy(otherGO);
                 break;
@@ -93,7 +101,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void ShowDamage()
+    void ShowDamage() // for showing damage (turning red)
     {
         foreach (Material m in materials)
         {
