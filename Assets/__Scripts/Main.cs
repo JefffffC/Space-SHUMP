@@ -66,8 +66,11 @@ public class Main : MonoBehaviour
     {
         SceneManager.LoadScene("_Scene_0"); // restarts the game by reloading the scene
 <<<<<<< HEAD
+<<<<<<< HEAD
         ScoreManage.S.ResetScore(); // resets score on restart
         print(GameObject.Find("Starfield").GetComponent<Parallax>().speed);
+=======
+>>>>>>> parent of 5cf3eee... Part 4
 =======
 >>>>>>> parent of 5cf3eee... Part 4
     }
