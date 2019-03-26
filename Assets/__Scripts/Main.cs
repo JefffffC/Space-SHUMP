@@ -66,6 +66,7 @@ public class Main : MonoBehaviour
     {
         SceneManager.LoadScene("_Scene_0"); // restarts the game by reloading the scene
         ScoreManage.S.ResetScore(); // resets score on restart
+        print(GameObject.Find("Starfield").GetComponent<Parallax>().speed);
     }
 
     static public WeaponDefinition GetWeaponDefinition (WeaponType wt) //static function which allows other classes to access the data in WEAP_DICT
