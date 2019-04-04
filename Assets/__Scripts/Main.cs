@@ -16,7 +16,23 @@ public class Main : MonoBehaviour
     public GameObject[] prefabEnemies; // array of prefab enemies
 
     public WeaponDefinition[] weaponDefinitions; // list of weapon types, placed in Main class
+    public GameObject prefabPowerUp;
+    public WeaponType[] powerUpFrequency = new WeaponType[]
+    { WeaponType.Blaster, WeaponType.Blaster, WeaponType.BonusLife, WeaponType.Invincible }; // list of potential PowerUps, Blaster is more likely
 
+    public void EnemyDestroyed (Enemy e)
+    {
+        if (Random.value <= e.powerUpDropChance)
+        {
+            // choose which PowerUp to pick from possible ones in list
+            int randomSelection = Random.Range(0, powerUpFrequency.Length);
+            WeaponType puType = powerUpFrequency[randomSelection];
+            GameObject go = Instantiate(prefabPowerUp) as GameObject;
+            PowerUp pu = go.GetComponent<PowerUp>();
+            pu.SetType(puType);
+            pu.transform.position = e.transform.position;
+        }
+    }
 
     void Awake()
     {

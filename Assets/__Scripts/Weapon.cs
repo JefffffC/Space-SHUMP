@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum WeaponType // an enum of the various possible weapon types
+public enum WeaponType // an enum of the various possible weapon (or PowerUp) types
 {
     Simple, // simple, single straight shot
-    Blaster // triple shot, one straight and two diagonal in a v-shaped pattern
+    Blaster, // triple shot, one straight and two diagonal in a v-shaped pattern
+    BonusLife, // for adding an extra Hero life, allowing respawn with retained score
+    Invincible // for making the Hero immune to damage, making collisions not deplete the shield
 }
 
 public class Weapon : MonoBehaviour
@@ -40,17 +42,17 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    void Update ()
-    {
-        if (Input.GetButtonDown("Fire3") == true) // if shift key is pressed then weapon is toggled
-        {
-            if (_type == WeaponType.Blaster) // if blaster, toggle to Simple
-            {
-                type = WeaponType.Simple;
-            }
-            else type = WeaponType.Blaster; // otherwise toggle to blaster
-        }
-    }
+//    void Update () // retired legacy weapon switcher from Phase 2, obsolete due to PowerUps
+//    {
+//        if (Input.GetButtonDown("Fire3") == true) // if shift key is pressed then weapon is toggled
+//        {
+//            if (_type == WeaponType.Blaster) // if blaster, toggle to Simple
+//            {
+//                type = WeaponType.Simple;
+//            }
+//            else type = WeaponType.Blaster; // otherwise toggle to blaster
+//        }
+//    }
 
     public WeaponType type
     {
@@ -130,9 +132,10 @@ public class WeaponDefinition
 {
     public WeaponType type = WeaponType.Simple; // default weapon
     public GameObject projectilePrefab; // prefab for projectiles
-    public Color color = Color.white; // color of collar
+    public Color color = Color.white; // color of collar (or PowerUp box)
     public Color projectileColor = Color.white; // color of projectiles
     public float damageOnHit = 1f; // damage of one projectile hitting
     public float delayBetweenShots = 0.1f; // firing rate of weapon
     public float velocity = 20f; // speed of projectiles from weapon
+    public string letter; // Letter to show on the power-up
 }

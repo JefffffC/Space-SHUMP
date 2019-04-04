@@ -98,8 +98,14 @@ public class PowerUp : MonoBehaviour
     {
         // grab WeaponDefinition from Main
         WeaponDefinition def = Main.GetWeaponDefinition(wt);
-        cubeRend.material.color = def.color;
-        letter.text = "W"; // set to "W", a random weapon which will be selected
+        cubeRend.material.color = def.color; // set to appropriate color based on WeaponDefinition
+        if ((def.letter == "L") || (def.letter == "I")) {
+            letter.text = def.letter; // set to appropriate non-weapon powerup letter
+        }
+        else
+        {
+            letter.text = "W"; // set to "W" if the PowerUp is a random weapon
+        }
         type = wt;
     }
     public void AbsorbedBy(GameObject target)

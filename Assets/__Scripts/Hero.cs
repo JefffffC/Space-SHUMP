@@ -22,12 +22,6 @@ public class Hero : MonoBehaviour
     public delegate void WeaponFireDelegate(); // declare a new delegate type WeaponFireDelegate
     public WeaponFireDelegate fireDelegate;
 
-    void Awake()
-    {
-      // fireDelegate += TempFire;
-    }
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -60,11 +54,6 @@ public class Hero : MonoBehaviour
         {
             fireDelegate();
         }
-
-        if (Input.GetButtonDown("Fire3") == true)
-        {
-            Debug.Log("Weapon switched");
-        }
     }
 
 
@@ -87,10 +76,32 @@ public class Hero : MonoBehaviour
             --shieldLevel;
             Destroy(go);
         }
+        else if (go.tag == "PowerUp")
+        {
+            AbsorbPowerUp(go);
+        }
         else
         {
             print("Triggered by non-Enemy: " + go.name);
         }
+    }
+
+    public void AbsorbPowerUp (GameObject go)
+    {
+        PowerUp pu = go.GetComponent<PowerUp>();
+        switch (pu.type)
+        {
+            case WeaponType.BonusLife:
+                Debug.Log("BonusLife PowerUp collected");
+                break;
+            case WeaponType.Invincible:
+                Debug.Log("Invincible PowerUp Collected");
+                break;
+            case WeaponType.Blaster:
+                Debug.Log("Blaster PowerUp Collected");
+                break;
+        }
+        pu.AbsorbedBy(this.gameObject);
     }
 
     public float shieldLevel // property

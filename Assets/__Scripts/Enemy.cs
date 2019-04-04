@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     public int score = 100; //points earned for destroying enemy
 
     public float showDamageDuration = 0.05f; // # of seconds to show damage indicator
+    public float powerUpDropChance = 0.1f; // likelihood of PowerUp spawn
 
     [Header("Set Dynamically: Enemy")]
     public Color[] originalColors;
@@ -84,6 +85,11 @@ public class Enemy : MonoBehaviour
                 health -= Main.GetWeaponDefinition(p.type).damageOnHit;
                 if (health <= 0) // destroy enemy if health depleted
                 {
+                    if (!notifiedofDestruction)
+                    {
+                        Main.S.EnemyDestroyed(this); // pass the reference to the destroyed enemy to the EnemyDestroyed method of Main
+                    }
+                    notifiedofDestruction = true; // bool which enforces only one pass to Main singleton, ensuring only one PowerUp may spawn
                     Destroy(this.gameObject);
                     while (destroyedFlag == false) // this loop is a solution to an issue of double-counting the score
                     {

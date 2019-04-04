@@ -647,6 +647,7 @@ MonoBehaviour:
     damageOnHit: 1
     delayBetweenShots: 0.2
     velocity: 40
+    letter: 
   - type: 1
     projectilePrefab: {fileID: 2347395794818015675, guid: 3b35250630c69a2409e6cd2b0dd34f8b,
       type: 3}
@@ -655,6 +656,26 @@ MonoBehaviour:
     damageOnHit: 2
     delayBetweenShots: 0.5
     velocity: 40
+    letter: 
+  - type: 2
+    projectilePrefab: {fileID: 0}
+    color: {r: 1, g: 0.8666667, b: 0.027450979, a: 1}
+    projectileColor: {r: 1, g: 1, b: 1, a: 1}
+    damageOnHit: 0
+    delayBetweenShots: 0
+    velocity: 0
+    letter: L
+  - type: 3
+    projectilePrefab: {fileID: 0}
+    color: {r: 0.70623255, g: 0, b: 1, a: 1}
+    projectileColor: {r: 1, g: 1, b: 1, a: 1}
+    damageOnHit: 0
+    delayBetweenShots: 0
+    velocity: 0
+    letter: I
+  prefabPowerUp: {fileID: 6015857346415543061, guid: c9c510014234f574a8325d5bda084adb,
+    type: 3}
+  powerUpFrequency: 010000000200000003000000
 --- !u!114 &534669907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1826,6 +1847,41 @@ PrefabInstance:
     - target: {fileID: 6787885855077791290, guid: e127ca94ce4a5514d82bbd0c35b774e9,
         type: 3}
       propertyPath: _type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6787885855077791290, guid: e127ca94ce4a5514d82bbd0c35b774e9,
+        type: 3}
+      propertyPath: def.color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6787885855077791290, guid: e127ca94ce4a5514d82bbd0c35b774e9,
+        type: 3}
+      propertyPath: def.color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6787885855077791290, guid: e127ca94ce4a5514d82bbd0c35b774e9,
+        type: 3}
+      propertyPath: def.color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6787885855077791290, guid: e127ca94ce4a5514d82bbd0c35b774e9,
+        type: 3}
+      propertyPath: def.type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6787885855077791290, guid: e127ca94ce4a5514d82bbd0c35b774e9,
+        type: 3}
+      propertyPath: def.projectileColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6787885855077791290, guid: e127ca94ce4a5514d82bbd0c35b774e9,
+        type: 3}
+      propertyPath: def.projectileColor.g
+      value: 0.6862745
+      objectReference: {fileID: 0}
+    - target: {fileID: 6787885855077791290, guid: e127ca94ce4a5514d82bbd0c35b774e9,
+        type: 3}
+      propertyPath: def.projectileColor.b
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
