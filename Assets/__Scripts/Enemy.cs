@@ -24,6 +24,8 @@ public class Enemy : MonoBehaviour
     protected BoundsCheck bndCheck;
     private bool destroyedFlag = false;
 
+    protected AudioSource hitSound; //sound for when enemy has been hit and destroyed
+
     //property: method that acts like a field
     public Vector3 pos
     {
@@ -39,6 +41,8 @@ public class Enemy : MonoBehaviour
 
     void Awake()
     {
+        hitSound = GetComponent<AudioSource>(); //initializing the sound
+
         this.bndCheck = GetComponent<BoundsCheck>();
         // get materials and colors for this GameObject and its children
         materials = Utils.GetAllMaterials(gameObject);
@@ -69,6 +73,7 @@ public class Enemy : MonoBehaviour
 
     void OnCollisionEnter (Collision coll) 
     {
+        hitSound.Play(); //play sound of enemy being hit on collision
         GameObject otherGO = coll.gameObject; // get the GameObject off the collider that was hit in the collision
         switch (otherGO.tag)
         {

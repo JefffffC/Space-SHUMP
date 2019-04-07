@@ -22,8 +22,12 @@ public class Weapon : MonoBehaviour
     public float lastShotTime; // last time shot was fired
     private Renderer collarRend;
 
+    private AudioSource fireSound;
+
     void Start ()
     {
+        fireSound = GetComponent<AudioSource>(); //initializing the sound
+
         collar = transform.Find("Collar").gameObject;
         collarRend = collar.GetComponent<Renderer>();
 
@@ -80,6 +84,9 @@ public class Weapon : MonoBehaviour
         // if this.gameObject is inactive, return
         if (!gameObject.activeInHierarchy) return;
         if (Time.time - lastShotTime < def.delayBetweenShots) return;
+
+        fireSound.Play(); //play sound of blaster or shooter firing
+
         Projectile p;
         Vector3 vel = Vector3.up * def.velocity; // move projectile according to velocity
         if (transform.up.y < 0)

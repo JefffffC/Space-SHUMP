@@ -29,6 +29,9 @@ public class Main : MonoBehaviour
     public WeaponType[] powerUpFrequency = new WeaponType[]
     { WeaponType.Blaster, WeaponType.Blaster, WeaponType.BonusLife, WeaponType.Invincible }; // list of potential PowerUps, Blaster is more likely
 
+    private AudioSource introSound; //sound for when shields are down
+
+
     public void EnemyDestroyed (Enemy e)
     {
         if (Random.value <= e.powerUpDropChance)
@@ -57,6 +60,8 @@ public class Main : MonoBehaviour
         {
             WEAP_DICT[def.type] = def;
         }
+
+        introSound = GetComponent<AudioSource>(); //initializing the sound
     }
 
     // Update is called once per frame
@@ -82,7 +87,7 @@ public class Main : MonoBehaviour
                 {
                     Enemy = Instantiate<GameObject>(prefabEnemies[2]);
                 }
-                else if  (c == 7 && _wave > 2)
+                else if  ((c==7 || c == 8) && _wave > 2)
                 {
                     Enemy = Instantiate<GameObject>(prefabEnemies[3]);
 
@@ -136,6 +141,7 @@ public class Main : MonoBehaviour
 
     public void Restart()
     {
+        introSound.Play(); //play intro sound effect
         SceneManager.LoadScene("_Scene_0"); // restarts the game by reloading the scene
         ScoreManager.SM.updateHighScore();
     }
