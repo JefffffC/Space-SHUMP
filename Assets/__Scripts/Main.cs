@@ -82,7 +82,7 @@ public class Main : MonoBehaviour
                 {
                     Enemy = Instantiate<GameObject>(prefabEnemies[2]);
                 }
-                else if  ((c==7 || c == 8) && _wave > 2)
+                else if  (c == 7 && _wave > 2)
                 {
                     Enemy = Instantiate<GameObject>(prefabEnemies[3]);
 
