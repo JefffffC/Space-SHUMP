@@ -22,7 +22,7 @@ public class CooldownManager : MonoBehaviour
         if (coolingDown == true)
         {
             //Reduce fill amount over 30 seconds
-            .fillAmount -= 1.0f / cooldownInvincible * Time.deltaTime;
+            coolDownBar.fillAmount -= 1.0f / cooldownInvincible * Time.deltaTime;
         }
     }
 }
