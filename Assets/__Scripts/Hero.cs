@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Hero : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class Hero : MonoBehaviour
     public float gameRestartDelay = 2f;
     public GameObject projectilePrefab;
     public float projectileSpeed = 40;
+
+  
 
     [Header("Set Dynamically")]
     [SerializeField] // forces Unity to still show _shieldLevel despite being private
@@ -117,6 +120,8 @@ public class Hero : MonoBehaviour
             if (value < 0)
             {
                 Destroy(this.gameObject);
+           
+
                 Main.S.DelayedRestart(gameRestartDelay);
             }
         }

@@ -157,8 +157,8 @@ MonoBehaviour:
   radius: 2
   keepOnScreen: 1
   isOnScreen: 1
-  camWidth: 0
-  camHeight: 0
+  camWidth: 40
+  camHeight: 40
   offRight: 0
   offLeft: 0
   offUp: 0
@@ -178,6 +178,10 @@ MonoBehaviour:
   speed: 30
   rollMult: -45
   pitchMult: 30
+  gameRestartDelay: 2
+  projectilePrefab: {fileID: 0}
+  projectileSpeed: 40
+  _shieldLevel: 1
 --- !u!1 &1813119446931172456
 GameObject:
   m_ObjectHideFlags: 0

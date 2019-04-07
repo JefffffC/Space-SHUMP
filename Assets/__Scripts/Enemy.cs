@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
     public float damageDoneTime; // time to stop showing damage
     public bool notifiedofDestruction = false; // will be used later
 
-    private BoundsCheck bndCheck;
+    protected BoundsCheck bndCheck;
     private bool destroyedFlag = false;
 
     //property: method that acts like a field

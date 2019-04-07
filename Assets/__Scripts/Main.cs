@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 
@@ -9,10 +10,18 @@ public class Main : MonoBehaviour
 {
 
     static public Main S; // singleton for Main
-    static Dictionary<WeaponType, WeaponDefinition> WEAP_DICT;
-    private float _tm = 0.0f;
+    static public Dictionary<WeaponType, WeaponDefinition> WEAP_DICT;
+    
 
-    public float spawnEverySec = 2.0f; // rate of enemy spawns;
+    public float spawnWait;
+    public float startWait;
+    public float waveWait; 
+    public int enemyCount;
+    public Text waveLabel;
+    public GameObject[] nextWaveLabels;
+    public bool gameOver = false; 
+    private int _wave  ;
+
     public GameObject[] prefabEnemies; // array of prefab enemies
 
     public WeaponDefinition[] weaponDefinitions; // list of weapon types, placed in Main class
@@ -34,10 +43,14 @@ public class Main : MonoBehaviour
         }
     }
 
+  
+
     void Awake()
     {
+       
         S = this; // in order to set S to refer to specific instance of Main object, do it at the beginning
-
+        StartCoroutine(SpawnWaves());
+        _wave = 0;
         // A generic Dictionary with WeaponType as the key
         WEAP_DICT = new Dictionary<WeaponType, WeaponDefinition>();
         foreach(WeaponDefinition def in weaponDefinitions)
@@ -47,13 +60,55 @@ public class Main : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    IEnumerator SpawnWaves() // coroutine 
     {
-        _tm += Time.deltaTime;
-        if (_tm >= spawnEverySec)
+        yield return new WaitForSeconds (startWait);
+      
+        while (true)
         {
-            _tm = _tm - spawnEverySec;
-            GameObject Enemy;
+            for (int i=0; i< enemyCount; i++)
+            {
+                GameObject Enemy;
+                int c = (int)Random.Range(4, 8);
+                if (c == 4)
+                {
+                    Enemy = Instantiate<GameObject>(prefabEnemies[0]);
+                }
+                else if (c == 5)
+                {
+                    Enemy = Instantiate<GameObject>(prefabEnemies[1]);
+                }
+                else if (c == 6)
+                {
+                    Enemy = Instantiate<GameObject>(prefabEnemies[2]);
+                }
+                else if  ((c==7 || c == 8) && _wave > 2)
+                {
+                    Enemy = Instantiate<GameObject>(prefabEnemies[3]);
+
+                }
+                else
+                {
+                    Enemy = Instantiate<GameObject>(prefabEnemies[1]);
+                }
+                float xPos = Random.Range(-30, 30);
+                Enemy.transform.position = new Vector3(xPos, 45f);
+                yield return new WaitForSeconds(spawnWait);
+            }
+         
+
+          
+            _wave++;
+            waveLabel.text = "Wave: " + _wave;
+
+            yield return new WaitForSeconds(waveWait);
+           
+        }
+       /* _tm += Time.deltaTime;
+        if (_tm >= spawnWait)
+        {
+            _tm = _tm - startWait;
+            GameObject Enemy; 
             int c = (int)Random.Range(4, 8);
             if (c == 4)
             {
@@ -69,7 +124,8 @@ public class Main : MonoBehaviour
             }
             float xPos = Random.Range(-30, 30);
             Enemy.transform.position = new Vector3(xPos, 45f);
-        }
+        }*/
+      //  yield return new WaitForSeconds (spawnWait); 
     }
 
     public void DelayedRestart(float delay)
