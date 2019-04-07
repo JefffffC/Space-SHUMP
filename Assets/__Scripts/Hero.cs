@@ -15,7 +15,6 @@ public class Hero : MonoBehaviour
     public float gameRestartDelay = 2f;
     public GameObject projectilePrefab;
     public float projectileSpeed = 40;
-    public Weapon activeWeapon;
 
   
 
@@ -25,6 +24,8 @@ public class Hero : MonoBehaviour
 
     public delegate void WeaponFireDelegate(); // declare a new delegate type WeaponFireDelegate
     public WeaponFireDelegate fireDelegate;
+
+    private AudioSource shieldDownSound; //sound for when shields are down
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +40,7 @@ public class Hero : MonoBehaviour
             Debug.LogError("Hero.Start() - Attempted to Assign Second Hero! ");
 
         }
+        shieldDownSound = GetComponent<AudioSource>(); //initializing the sound
 
     }
 
@@ -78,6 +80,7 @@ public class Hero : MonoBehaviour
         if (go.tag == "Enemy") // only triggers if shield collides with enemy
         {
             --shieldLevel;
+            shieldDownSound.Play(); //play sound of shield destroyed
             Destroy(go);
         }
         else if (go.tag == "PowerUp")

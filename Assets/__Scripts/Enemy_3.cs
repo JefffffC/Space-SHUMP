@@ -17,7 +17,7 @@ public class Part {
 }
 
 public class Enemy_3 : Enemy {
-	// Enemy_4 will start offscreen and then pick a random point on screen to
+	// Enemy_3 will start offscreen and then pick a random point on screen to
 	// move to. Once it has arrived, it will pick another random point and
 	// continue until the player has shot it down.
 	public Vector3 p0,p1; // Stores the p0 & p1 for interpolation
@@ -61,7 +61,8 @@ public class Enemy_3 : Enemy {
 	}
 	
 	void OnCollisionEnter( Collision coll ) {
-		GameObject other = coll.gameObject;
+        hitSound.Play(); //play sound of enemy being hit on collision
+        GameObject other = coll.gameObject;
 		switch (other.tag) {
 		case "ProjectileHero":
 			Projectile p = other.GetComponent<Projectile>();
