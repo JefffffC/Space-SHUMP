@@ -636,11 +636,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnWait: 1
   startWait: 0.5
-  waveWait: 4
+  waveWait: 5
   enemyCount: 10
   waveLabel: {fileID: 2042311063}
   nextWaveLabels: []
-  gameOver: 0
+  gameOverText: {fileID: 7867551240570620333, guid: 616ad850a1b49d146a0eac05e7d08634,
+    type: 3}
   prefabEnemies:
   - {fileID: 8865730785073486968, guid: 83fc38ad436ee604899ba84d117605be, type: 3}
   - {fileID: 3280319079912068250, guid: 1a38f4957e1f0f743be408e582fa83e0, type: 3}
@@ -794,6 +795,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &540112393 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6787885855077791290, guid: e127ca94ce4a5514d82bbd0c35b774e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 8002587497559578413}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 543cca95948500043b9f73f7121aca52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &756787336
 GameObject:
   m_ObjectHideFlags: 0
@@ -1796,6 +1809,7 @@ GameObject:
   - component: {fileID: 2002316592}
   - component: {fileID: 2002316591}
   - component: {fileID: 2002316593}
+  - component: {fileID: 2002316594}
   m_Layer: 8
   m_Name: _Hero
   m_TagString: Hero
@@ -1838,10 +1852,16 @@ MonoBehaviour:
   projectilePrefab: {fileID: 2347395794818015675, guid: 3b35250630c69a2409e6cd2b0dd34f8b,
     type: 3}
   projectileSpeed: 40
-  activeWeapon: {fileID: 0}
+  activeWeapon: {fileID: 540112393}
   defaultWeapon: 0
   isInvincible: 0
+  InvincibleMaterial: {fileID: 2100000, guid: 2cb096d8e633f4847bc570530662b115, type: 2}
+  extraLives: 3
+  respawnScreen: {fileID: 7394471505852955361, guid: 54a61f01b955a94429030f8b9725c889,
+    type: 3}
   _shieldLevel: 1
+  originalWingMat: {fileID: 0}
+  originalBodyMat: {fileID: 0}
 --- !u!4 &2002316590
 Transform:
   m_ObjectHideFlags: 0
@@ -1993,8 +2013,24 @@ MonoBehaviour:
     type: 3}
   coolingDownInvincible: 0
   coolingDownRandomWeapon: 0
-  cooldownInvincibleTime: 10
-  cooldownRandomWeaponTime: 30
+  cooldownInvincibleTime: 7.5
+  cooldownRandomWeaponTime: 20
+--- !u!114 &2002316594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002316587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 560613eae1c96f742b01c27f0b7c1d8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ExtraLifeIcon: {fileID: 985644525866293570, guid: ca26506338c3ece42a3668ed51b0aa2a,
+    type: 3}
+  iconGaps: 45
+  maxExtraLives: 10
 --- !u!1 &2042311061
 GameObject:
   m_ObjectHideFlags: 0
@@ -2065,7 +2101,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Wave: 0'
+  m_Text: 'Wave: 1
+
+'
 --- !u!222 &2042311064
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -23,7 +23,10 @@ public class Enemy_3 : Enemy {
 	public Vector3 p0,p1; // Stores the p0 & p1 for interpolation
 	public float timeStart; // Birth time for this Enemy_4
 	public float duration = 4; // Duration of movement
+
+    [Header("Set in Inspector: Enemy_3")]
 	public Part[] parts; // The array of ship Parts
+
     void Start()
     {
         p0 = p1 = pos;
@@ -73,7 +76,7 @@ public class Enemy_3 : Enemy {
 				Destroy(other);
 				break;
 			}
-			
+			//hurt the enemy
 			GameObject goHit = coll.contacts[0].thisCollider.gameObject;
 			Part prtHit = FindPart(goHit);
 			if (prtHit == null) { // If prtHit wasn't found
@@ -96,7 +99,7 @@ public class Enemy_3 : Enemy {
 			}
 			// It's not protected, so make it take damage
 			// Get the damage amount from the Projectile.type & Main.W_DEFS
-			prtHit.health -= Main.WEAP_DICT[p.type].damageOnHit;
+			prtHit.health -= Main.GetWeaponDefinition(p.type).damageOnHit;
             // Show damage on the part
             Debug.Log("Attempted to show damage"); // DEBUGGING LINE
 			ShowLocalizedDamage(prtHit.mat);
@@ -156,8 +159,9 @@ public class Enemy_3 : Enemy {
 	}
 	// This changes the color of just one Part to red instead of the whole ship
 	void ShowLocalizedDamage(Material m) {
+        Debug.Log("attempting to show localized damage");
 		m.color = Color.red;
         damageDoneTime = Time.time + showDamageDuration;
-        showingDamage = true ;
-	}
+        showingDamage = true;
+    }
 }

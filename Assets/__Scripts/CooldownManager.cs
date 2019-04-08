@@ -10,8 +10,8 @@ public class CooldownManager : MonoBehaviour
     public GameObject powerupCooldownUI;
     public bool coolingDownInvincible = false; // coolingDown true shrinks the coolDown bar
     public bool coolingDownRandomWeapon = false;
-    public float cooldownInvincibleTime = 10.0f; // cooldown time of Invincible powerup
-    public float cooldownRandomWeaponTime = 30.0f; // cooldown time of RandomWeapon powerup
+    public float cooldownInvincibleTime = 7.5f; // cooldown time of Invincible powerup
+    public float cooldownRandomWeaponTime = 20.0f; // cooldown time of RandomWeapon powerup
 
     [Header("Set Dynamically")]
     private Color _powerupColor; // powerup color is determined from weapon type passed by Hero

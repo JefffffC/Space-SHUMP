@@ -19,6 +19,8 @@ public class Hero : MonoBehaviour
     public WeaponType defaultWeapon = WeaponType.Simple;
     public bool isInvincible = false; // toggle for invincibility (for powerup)
     public Material InvincibleMaterial;
+    public int extraLives = 3;
+    public GameObject respawnScreen;
 
 
     [Header("Set Dynamically")]
@@ -31,6 +33,7 @@ public class Hero : MonoBehaviour
     public Material originalWingMat, originalBodyMat;
 
     private AudioSource shieldDownSound; //sound for when shields are down
+    private GameObject _respawnScreen;
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +45,6 @@ public class Hero : MonoBehaviour
         else
         {
             Debug.LogError("Hero.Start() - Attempted to Assign Second Hero! ");
-
         }
         Renderer heroWing = S.transform.Find("Wing").GetComponent<Renderer>(); // get the renderer of the Wing child of Hero
         Renderer heroBody = S.transform.Find("Cockpit").GetComponentInChildren<Renderer>(); // get the renderer of the Body grandchild of Hero
@@ -51,6 +53,11 @@ public class Hero : MonoBehaviour
         originalBodyMat = heroBody.material; // get the material of the original
 
         shieldDownSound = GetComponent<AudioSource>(); //initializing the sound
+
+        for (int i = 0; i < extraLives; i++) // loop which uses ELM singleton to generate prefabs representing starting extra lives on boot up
+        {
+            ExtraLifeManager.ELM.addExtraLife();
+        }
     }
 
     // Update is called once per frame
@@ -98,7 +105,7 @@ public class Hero : MonoBehaviour
             heroWing.material = originalWingMat; // restore original materials
             heroBody.material = originalBodyMat;
         }
-
+        
     }
 
 
@@ -141,14 +148,16 @@ public class Hero : MonoBehaviour
         switch (pu.type)
         {
             case WeaponType.BonusLife:
+                ExtraLifeManager.ELM.addExtraLife(); // activate corresponding function of singleton Extra Life Manager
+                ++extraLives; // increment extra lives count
                 Debug.Log("BonusLife PowerUp collected");
                 break;
             case WeaponType.Invincible:
-                CooldownManager.CM.activateCooldown(pu.type);
+                CooldownManager.CM.activateCooldown(pu.type); // activate corresponding function of singleton Cooldown Manager, passing powerup type
                 Debug.Log("Invincible PowerUp Collected");
                 break;
             case WeaponType.Blaster:
-                CooldownManager.CM.activateCooldown(pu.type);
+                CooldownManager.CM.activateCooldown(pu.type); // activate corresponding function of singleton Cooldown Manager, passing powerup type
                 Debug.Log("Blaster PowerUp Collected");
                 break;
         }
@@ -167,13 +176,36 @@ public class Hero : MonoBehaviour
             // if the shield is going to be set to less than zero, then Hero is destroyed
             if (value < 0)
             {
-                Destroy(this.gameObject);
-           
-
-                Main.S.DelayedRestart(gameRestartDelay);
+                this.gameObject.SetActive(false); // DEACTIVATE the ship, and don't immediately end the game
+                --extraLives; // decrement extra lives
+                ExtraLifeManager.ELM.removeExtraLife(); // remove extra life from side bar (Extra Life Manager accounts for negative life balance)
+                if (extraLives < 0) // running out of extra lives and then dying means game over, full restart
+                {
+                    Destroy(this.gameObject); // destroy the ship and restart the game
+                    Main.S.DelayedRestart(gameRestartDelay);
+                }
+                else // if extraLives >= 0, the game still continues - respawn Hero, and grant invincibility, renew shields
+                {
+                    _respawnScreen = Instantiate<GameObject>(respawnScreen); // instantiate game over screen
+                    _respawnScreen.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false); // set parent to Canvas so game over is visible
+                    delayedRespawn();
+                }
             }
         }
 
+    }
+    public void delayedRespawn()
+    {
+        Invoke("respawn", gameRestartDelay -1f);
+    }
+    public void respawn()
+    {
+        Destroy(_respawnScreen);
+        S.gameObject.SetActive(true); // "respawn" hero and reposition accordingly
+        S.gameObject.transform.position = new Vector3(0, 0, 0);
+        S._shieldLevel = 1; // restore shields to max
+        WeaponType wt = WeaponType.Invincible; // grant temporary invincibility to make it more fair
+        CooldownManager.CM.activateCooldown(wt); 
     }
 
 }

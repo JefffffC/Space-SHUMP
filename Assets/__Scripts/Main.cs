@@ -19,7 +19,10 @@ public class Main : MonoBehaviour
     public int enemyCount;
     public Text waveLabel;
     public GameObject[] nextWaveLabels;
-    public bool gameOver = false; 
+
+    [Header("Set in the Inspector")]
+    public GameObject gameOverText;
+    
     private int _wave  ;
 
     public GameObject[] prefabEnemies; // array of prefab enemies
@@ -32,6 +35,7 @@ public class Main : MonoBehaviour
         WeaponType.BonusLife }; // list of potential PowerUps, more likely powerups appear multiple times
 
     private AudioSource _introSound; //sound for when shields are down
+    private GameObject _gameOverText; // placeholder variable for gameover display
 
 
     public void EnemyDestroyed (Enemy e)
@@ -76,27 +80,23 @@ public class Main : MonoBehaviour
             for (int i=0; i< enemyCount; i++)
             {
                 GameObject Enemy;
-                int c = (int)Random.Range(4, 8);
-                if (c == 4)
+                int c = (int)Random.Range(1, 12); // random number generator and wave-based generation technique
+                if (c == 5 || c == 6 || c == 7)
                 {
-                    Enemy = Instantiate<GameObject>(prefabEnemies[0]);
+                    Enemy = Instantiate<GameObject>(prefabEnemies[1]); // enemy[1] spawns as early as wave 1, but not frequently
                 }
-                else if (c == 5)
+                else if ((c == 8 || c == 9 || c == 10) && _wave > 3)
                 {
-                    Enemy = Instantiate<GameObject>(prefabEnemies[1]);
+                    Enemy = Instantiate<GameObject>(prefabEnemies[2]); // harder enemy[2] only spawns in wave 4 or higher
                 }
-                else if (c == 6)
+                else if  ((c== 10 || c == 11 || c == 12) && _wave > 5)
                 {
-                    Enemy = Instantiate<GameObject>(prefabEnemies[2]);
-                }
-                else if  ((c==7 || c == 8) && _wave > 2)
-                {
-                    Enemy = Instantiate<GameObject>(prefabEnemies[3]);
+                    Enemy = Instantiate<GameObject>(prefabEnemies[3]); // boss-type enemy only spawns in wave 6 or higher
 
                 }
                 else
                 {
-                    Enemy = Instantiate<GameObject>(prefabEnemies[1]);
+                    Enemy = Instantiate<GameObject>(prefabEnemies[0]); // easier enemy[0] is much more likely to spawn in early waves
                 }
                 float xPos = Random.Range(-30, 30);
                 Enemy.transform.position = new Vector3(xPos, 45f);
@@ -106,7 +106,7 @@ public class Main : MonoBehaviour
 
           
             _wave++;
-            waveLabel.text = "Wave: " + _wave;
+            waveLabel.text = "Wave: " + (_wave + 1);
 
             yield return new WaitForSeconds(waveWait);
            
@@ -137,12 +137,15 @@ public class Main : MonoBehaviour
 
     public void DelayedRestart(float delay)
     {
+        _gameOverText = Instantiate<GameObject>(gameOverText); // instantiate game over screen
+        _gameOverText.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false); // set parent to Canvas so game over is visible
         //invoke the Restart() method in delay seconds
         Invoke("Restart", delay);
     }
 
     public void Restart()
     {
+        Destroy(_gameOverText);
         _introSound.Play(); //play intro sound effect
         SceneManager.LoadScene("_Scene_0"); // restarts the game by reloading the scene
         ScoreManager.SM.updateHighScore();
