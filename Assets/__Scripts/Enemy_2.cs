@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Enemy_2 : Enemy
 {
+
+    //variables such as points awarded, enemy HP and droprates are set in inspector, from extended Enemy class
+
     public GameObject target;
     public float movementSpeed = 15f;
     public float rotationSpeed = 90f;

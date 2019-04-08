@@ -16,18 +16,12 @@ public class Hero : MonoBehaviour
     public GameObject projectilePrefab;
     public float projectileSpeed = 40;
     public Weapon activeWeapon;
-    public GameObject coolDownBox;
-
-
+    public WeaponType defaultWeapon = WeaponType.Simple;
 
 
     [Header("Set Dynamically")]
     [SerializeField] // forces Unity to still show _shieldLevel despite being private
     private float _shieldLevel = 1;
-    private GameObject _activeCooldownBox1; // private variables for active powerup timers
-    private GameObject _activeCooldownBox2;
-    private bool _countingdownBox1 = false;
-    private bool _countingdownBox2 = false;
 
     public delegate void WeaponFireDelegate(); // declare a new delegate type WeaponFireDelegate
     public WeaponFireDelegate fireDelegate;
@@ -37,7 +31,6 @@ public class Hero : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         if (S == null)
         {
             S = this;
@@ -48,7 +41,6 @@ public class Hero : MonoBehaviour
 
         }
         shieldDownSound = GetComponent<AudioSource>(); //initializing the sound
-
     }
 
     // Update is called once per frame
@@ -66,29 +58,6 @@ public class Hero : MonoBehaviour
         if (Input.GetAxis("Jump") == 1 && fireDelegate != null) // either space or up arrow
         {
             fireDelegate();
-        }
-
-        if (_countingdownBox1 == true)
-        {
-            if (_activeCooldownBox1 != null)
-            {
-                if (_activeCooldownBox1.GetComponent<CooldownManager>().coolingDown == false)
-                {
-                    //disable invincibility
-                    _countingdownBox1 = false;
-                }
-            }
-        }
-        if (_countingdownBox2 == true)
-        {
-            if (_activeCooldownBox2 != null)
-            {
-                if (_activeCooldownBox2.GetComponent<CooldownManager>().coolingDown == false)
-                {
-                    activeWeapon.SetType(activeWeapon.defaultWeapon);
-                    _countingdownBox2 = false;
-                }
-            }
         }
     }
 
@@ -132,23 +101,12 @@ public class Hero : MonoBehaviour
                 Debug.Log("BonusLife PowerUp collected");
                 break;
             case WeaponType.Invincible:
+                CooldownManager.CM.activateCooldown(pu.type);
                 Debug.Log("Invincible PowerUp Collected");
-
-                // insert code for Invincible stuff here
-
-                _activeCooldownBox1 = Instantiate<GameObject>(coolDownBox); // instantiate CoolDownBox from prefab
-                _activeCooldownBox1.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false); // move it under canvas so it displays properly
-                _activeCooldownBox1.GetComponent<CooldownManager>().activateCooldown(pu.type); // get the script of the cooldown and activate it, passing powerup type 
-                _countingdownBox1 = true; // begin tracking cooldown for deactivation of powerup
                 break;
             case WeaponType.Blaster:
+                CooldownManager.CM.activateCooldown(pu.type);
                 Debug.Log("Blaster PowerUp Collected");
-                activeWeapon.SetType(pu.type); // set the active weapon of Hero to Blaster, calling Weapon function
-                _activeCooldownBox2 = Instantiate<GameObject>(coolDownBox); // instantiate CoolDownBox from prefab
-                _activeCooldownBox2.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false); // move it under canvas so it displays properly
-                _activeCooldownBox2.transform.Translate(0, 40, 0); // moves the cooldown UI up so it doesn't overlap the invincible one, and can stack
-                _activeCooldownBox2.GetComponent<CooldownManager>().activateCooldown(pu.type); // get the script of the cooldown and activate it, passing powerup type 
-                _countingdownBox2 = true; // begin tracking cooldown for deactivaton of powerup
                 break;
         }
         pu.AbsorbedBy(this.gameObject);

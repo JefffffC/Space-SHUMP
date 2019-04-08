@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Enemy_1 : Enemy
 {
-    // Start is called before the first frame update
+    //variables such as points awarded, enemy HP and droprates are set in inspector, from extended Enemy class
+
 
     private int _leftorright;
     void Start()

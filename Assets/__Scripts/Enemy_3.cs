@@ -97,7 +97,8 @@ public class Enemy_3 : Enemy {
 			// It's not protected, so make it take damage
 			// Get the damage amount from the Projectile.type & Main.W_DEFS
 			prtHit.health -= Main.WEAP_DICT[p.type].damageOnHit;
-			// Show damage on the part
+            // Show damage on the part
+            Debug.Log("Attempted to show damage"); // DEBUGGING LINE
 			ShowLocalizedDamage(prtHit.mat);
 			if (prtHit.health <= 0) {
 				// Instead of Destroying this enemy, disable the damaged part
