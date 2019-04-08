@@ -35,7 +35,7 @@ public class CooldownManager : MonoBehaviour
             case WeaponType.Invincible:
                 if (coolingDownInvincible == false) // if Invincible is not active, then instantiate a new one
                 {
-                    // ACTIVATE INVINCIBILITY HERE
+                    Hero.S.isInvincible = true; // make hero invincible
                     _activeCooldownBox1 = Instantiate<GameObject>(powerupCooldownUI); // instantiate CoolDownBox from prefab
                     _activeCooldownBox1.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false); // move it under canvas so it displays properly
                     Debug.Log("Attempted instantiation of invincible box");
@@ -94,7 +94,7 @@ public class CooldownManager : MonoBehaviour
             if (_cooldownBar1.fillAmount == 0)
             {
                 coolingDownInvincible = false; // stop decrementing timer
-                // DEACTIVATE INVINCIBILITY HERE
+                Hero.S.isInvincible = false; // lose invincibility
                 Destroy(_activeCooldownBox1); // destroy cooldownUI once expired
             }
         }

@@ -17,14 +17,18 @@ public class Hero : MonoBehaviour
     public float projectileSpeed = 40;
     public Weapon activeWeapon;
     public WeaponType defaultWeapon = WeaponType.Simple;
+    public bool isInvincible = false; // toggle for invincibility (for powerup)
+    public Material InvincibleMaterial;
 
 
     [Header("Set Dynamically")]
     [SerializeField] // forces Unity to still show _shieldLevel despite being private
     private float _shieldLevel = 1;
+    private bool _invincibleChangeFlag = false;
 
     public delegate void WeaponFireDelegate(); // declare a new delegate type WeaponFireDelegate
     public WeaponFireDelegate fireDelegate;
+    public Material originalWingMat, originalBodyMat;
 
     private AudioSource shieldDownSound; //sound for when shields are down
 
@@ -40,6 +44,12 @@ public class Hero : MonoBehaviour
             Debug.LogError("Hero.Start() - Attempted to Assign Second Hero! ");
 
         }
+        Renderer heroWing = S.transform.Find("Wing").GetComponent<Renderer>(); // get the renderer of the Wing child of Hero
+        Renderer heroBody = S.transform.Find("Cockpit").GetComponentInChildren<Renderer>(); // get the renderer of the Body grandchild of Hero
+
+        originalWingMat = heroWing.material; // get the material of the original 
+        originalBodyMat = heroBody.material; // get the material of the original
+
         shieldDownSound = GetComponent<AudioSource>(); //initializing the sound
     }
 
@@ -59,6 +69,36 @@ public class Hero : MonoBehaviour
         {
             fireDelegate();
         }
+        if ((isInvincible == true) && (_invincibleChangeFlag == false)) // event listener which toggles invincible look based on public bool
+        {
+            S._goInvincible(true);
+            _invincibleChangeFlag = true;
+        }
+        if ((isInvincible == false) && (_invincibleChangeFlag == true)) // event listner which toggles it back to normal based on public bool
+        {
+            S._goInvincible(false);
+            _invincibleChangeFlag = false;
+        }
+
+    }
+
+    private void _goInvincible(bool toggle)
+    {
+        if (toggle == true)
+        {
+            Renderer heroWing = S.transform.Find("Wing").GetComponent<Renderer>(); // get the renderer of the Wing child of Hero
+            Renderer heroBody = S.transform.Find("Cockpit").GetComponentInChildren<Renderer>(); // get the renderer of the Body grandchild of Hero
+            heroBody.material = InvincibleMaterial; // set to custom invincible material to let the player know (and is pretty)
+            heroWing.material = InvincibleMaterial;
+        }
+        else
+        {
+            Renderer heroWing = S.transform.Find("Wing").GetComponent<Renderer>(); // get the renderer of the Wing child of Hero
+            Renderer heroBody = S.transform.Find("Cockpit").GetComponentInChildren<Renderer>(); // get the renderer of the Body grandchild of Hero
+            heroWing.material = originalWingMat; // restore original materials
+            heroBody.material = originalBodyMat;
+        }
+
     }
 
 
@@ -78,8 +118,11 @@ public class Hero : MonoBehaviour
 
         if (go.tag == "Enemy") // only triggers if shield collides with enemy
         {
-            --shieldLevel;
-            shieldDownSound.Play(); //play sound of shield destroyed
+            if (S.isInvincible == false) // only deplete shields if player is not invincible
+            {
+                --shieldLevel;
+                shieldDownSound.Play(); //play sound of shield destroyed
+            }
             Destroy(go);
         }
         else if (go.tag == "PowerUp")
