@@ -26,8 +26,12 @@ public class PowerUp : MonoBehaviour
     private Vector3 _velocity;
     private float _gravity = 9.81f;
 
+    private AudioSource powerUpSound;
+
+   
     void Awake()
     {
+        powerUpSound = GetComponent<AudioSource>(); //initialize sound effect
         // find reference to cube object
         cube = transform.Find("Cube").gameObject;
         // find the text mesh and other components for entire PowerUp
@@ -56,6 +60,8 @@ public class PowerUp : MonoBehaviour
             _velocity = new Vector3(-1f * Random.Range(horizontalVelocityMinMax.x, horizontalVelocityMinMax.y),
                 Random.Range(verticalVelocityMinMax.x, verticalVelocityMinMax.y), 0f);
         }
+
+       
     }
 
     void Update()

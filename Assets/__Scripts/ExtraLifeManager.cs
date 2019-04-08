@@ -15,11 +15,14 @@ public class ExtraLifeManager : MonoBehaviour
     private int _numExtraLives = 0; // internal count of number of extra lives
     private Stack<ExtraLife> ExtraLives; // internal stack for LIFO structure of life addition/removal
 
+    private AudioSource respawnSound;
+
     void Awake()
     {
         ELM = this; // at the very start, set singleton to reference this instance
         Debug.Log("Extra Life Manager Activated"); // debug msg
         ExtraLives = new Stack<ExtraLife>(); // initiate internal stack
+        respawnSound = GetComponent<AudioSource>();
     }
 
     public void addExtraLife()
@@ -47,6 +50,7 @@ public class ExtraLifeManager : MonoBehaviour
             return;
         }
         ExtraLife removedLife = ExtraLives.Pop(); // remove the top-most ExtraLife on the stack
+        respawnSound.Play();
         Destroy(removedLife.ExtraLifeIcon); // destroy the GameObject pertaining to the ExtraLife 
         removedLife.ExtraLifeIcon = null; // set previous members to null
         _numExtraLives--; // decrement number for correct visual stacking on UI
