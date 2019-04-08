@@ -13,6 +13,7 @@ public enum WeaponType // an enum of the various possible weapon (or PowerUp) ty
 public class Weapon : MonoBehaviour
 {
     static public Transform PROJECTILE_ANCHOR;
+    public WeaponType defaultWeapon = WeaponType.Simple; // for convenient defaulting
 
     [Header("Set Dynamically")]
     [SerializeField] // make these vars viewable and editable in Unity despite private
@@ -20,16 +21,16 @@ public class Weapon : MonoBehaviour
     public WeaponDefinition def;
     public GameObject collar;
     public float lastShotTime; // last time shot was fired
-    private Renderer collarRend;
+    private Renderer _collarRend;
 
-    private AudioSource fireSound;
+    private AudioSource _fireSound;
 
     void Start ()
     {
-        fireSound = GetComponent<AudioSource>(); //initializing the sound
+        _fireSound = GetComponent<AudioSource>(); //initializing the sound
 
         collar = transform.Find("Collar").gameObject;
-        collarRend = collar.GetComponent<Renderer>();
+        _collarRend = collar.GetComponent<Renderer>();
 
         SetType(_type); // call SetType() for default _type of WeaponType.Simple
 
@@ -75,7 +76,7 @@ public class Weapon : MonoBehaviour
         _type = wt;
         this.gameObject.SetActive(true);
         def = Main.GetWeaponDefinition(_type);
-        collarRend.material.color = def.color; // set color of collar to the weapon collar definition
+        _collarRend.material.color = def.color; // set color of collar to the weapon collar definition
         lastShotTime = 0; // can fire immediately after _type is set
     }
 
@@ -85,7 +86,7 @@ public class Weapon : MonoBehaviour
         if (!gameObject.activeInHierarchy) return;
         if (Time.time - lastShotTime < def.delayBetweenShots) return;
 
-        fireSound.Play(); //play sound of blaster or shooter firing
+        _fireSound.Play(); //play sound of blaster or shooter firing
 
         Projectile p;
         Vector3 vel = Vector3.up * def.velocity; // move projectile according to velocity

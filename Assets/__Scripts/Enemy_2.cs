@@ -8,8 +8,8 @@ public class Enemy_2 : Enemy
     public float movementSpeed = 15f;
     public float rotationSpeed = 90f;
 
-    private float currentAngle;
-    private float targetAngle;
+    private float _currentAngle;
+    private float _targetAngle;
 
     // Use this for initialization
     void Start()
@@ -20,16 +20,16 @@ public class Enemy_2 : Enemy
         pos.z = 0f;
         transform.position = pos;
 
-        currentAngle = GetAngleToTarget();
+        _currentAngle = GetAngleToTarget();
     }
 
     // Update is called once per frame
     public override void Move()
     {
 
-        targetAngle = GetAngleToTarget();
-        currentAngle = Mathf.MoveTowardsAngle(currentAngle, targetAngle, rotationSpeed * Time.deltaTime);
-        transform.position += Quaternion.Euler(0, 0, currentAngle) * Vector3.right * movementSpeed * Time.deltaTime;
+        _targetAngle = GetAngleToTarget();
+        _currentAngle = Mathf.MoveTowardsAngle(_currentAngle, _targetAngle, rotationSpeed * Time.deltaTime);
+        transform.position += Quaternion.Euler(0, 0, _currentAngle) * Vector3.right * movementSpeed * Time.deltaTime;
 
     }
 

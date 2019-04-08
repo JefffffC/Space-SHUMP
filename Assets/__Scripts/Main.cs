@@ -27,9 +27,11 @@ public class Main : MonoBehaviour
     public WeaponDefinition[] weaponDefinitions; // list of weapon types, placed in Main class
     public GameObject prefabPowerUp;
     public WeaponType[] powerUpFrequency = new WeaponType[]
-    { WeaponType.Blaster, WeaponType.Blaster, WeaponType.BonusLife, WeaponType.Invincible }; // list of potential PowerUps, Blaster is more likely
+    { WeaponType.Blaster, WeaponType.Blaster, WeaponType.Blaster, WeaponType.Blaster,
+        WeaponType.Invincible, WeaponType.Invincible,
+        WeaponType.BonusLife }; // list of potential PowerUps, more likely powerups appear multiple times
 
-    private AudioSource introSound; //sound for when shields are down
+    private AudioSource _introSound; //sound for when shields are down
 
 
     public void EnemyDestroyed (Enemy e)
@@ -61,7 +63,7 @@ public class Main : MonoBehaviour
             WEAP_DICT[def.type] = def;
         }
 
-        introSound = GetComponent<AudioSource>(); //initializing the sound
+        _introSound = GetComponent<AudioSource>(); //initializing the sound
     }
 
     // Update is called once per frame
@@ -109,7 +111,7 @@ public class Main : MonoBehaviour
             yield return new WaitForSeconds(waveWait);
            
         }
-       /* _tm += Time.deltaTime;
+       /* _tm += Time.deltaTime; // legacy enemy spawning script retired and replaced with IEnumerator
         if (_tm >= spawnWait)
         {
             _tm = _tm - startWait;
@@ -141,7 +143,7 @@ public class Main : MonoBehaviour
 
     public void Restart()
     {
-        introSound.Play(); //play intro sound effect
+        _introSound.Play(); //play intro sound effect
         SceneManager.LoadScene("_Scene_0"); // restarts the game by reloading the scene
         ScoreManager.SM.updateHighScore();
     }

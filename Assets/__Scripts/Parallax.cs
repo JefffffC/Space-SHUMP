@@ -10,22 +10,22 @@ public class Parallax : MonoBehaviour
     public float scrollSpeed = -30f;
     public float motionMult = 0.25f; // how much parallax based on player motion
 
-    private float panelHt;
-    private float depth;
+    private float _panelHt;
+    private float _depth;
 
     void Start()
     {
-        panelHt = panels[0].transform.localScale.y;
-        depth = panels[0].transform.position.z;
+        _panelHt = panels[0].transform.localScale.y;
+        _depth = panels[0].transform.position.z;
 
         //set initial pos of panels
-        panels[0].transform.position = new Vector3(0, 0, depth);
-        panels[1].transform.position = new Vector3(0, panelHt, depth);
+        panels[0].transform.position = new Vector3(0, 0, _depth);
+        panels[1].transform.position = new Vector3(0, _panelHt, _depth);
 
         //set initial pos of BGP (background parallax panels)
 
-        panels[2].transform.position = new Vector3(0, 0, depth);
-        panels[3].transform.position = new Vector3(0, panelHt, depth);
+        panels[2].transform.position = new Vector3(0, 0, _depth);
+        panels[3].transform.position = new Vector3(0, _panelHt, _depth);
     }
 
     void Update()
@@ -33,9 +33,9 @@ public class Parallax : MonoBehaviour
         float tY, tYbgp;
         float tX = 0;
         float tXbgp = 0;
-        tY = Time.time * scrollSpeed % panelHt + (panelHt * 0.5f);
+        tY = Time.time * scrollSpeed % _panelHt + (_panelHt * 0.5f);
 
-        tYbgp = Time.time * (scrollSpeed * 0.5f) % panelHt + (panelHt * 0.5f); // slower parallaxing BGP to heighten sense of depth
+        tYbgp = Time.time * (scrollSpeed * 0.5f) % _panelHt + (_panelHt * 0.5f); // slower parallaxing BGP to heighten sense of depth
 
 
         if (poi != null)
@@ -45,25 +45,25 @@ public class Parallax : MonoBehaviour
         }
 
         // position panels[0]
-        panels[0].transform.position = new Vector3(tX, tY, depth);
+        panels[0].transform.position = new Vector3(tX, tY, _depth);
         if (tY >= 0)
         {
-            panels[1].transform.position = new Vector3(tX, tY - panelHt, depth);
+            panels[1].transform.position = new Vector3(tX, tY - _panelHt, _depth);
         }
         else
         {
-            panels[1].transform.position = new Vector3(tX, tY + panelHt, depth);
+            panels[1].transform.position = new Vector3(tX, tY + _panelHt, _depth);
         }
 
         // position bgps
-        panels[2].transform.position = new Vector3(tXbgp, tYbgp, depth);
+        panels[2].transform.position = new Vector3(tXbgp, tYbgp, _depth);
         if (tYbgp >= 0)
         {
-            panels[3].transform.position = new Vector3(tX, tYbgp - panelHt, depth);
+            panels[3].transform.position = new Vector3(tX, tYbgp - _panelHt, _depth);
         }
         else
         {
-            panels[3].transform.position = new Vector3(tX, tYbgp + panelHt, depth);
+            panels[3].transform.position = new Vector3(tX, tYbgp + _panelHt, _depth);
         }
     }
 }

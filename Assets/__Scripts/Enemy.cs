@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
     public bool notifiedofDestruction = false; // will be used later
 
     protected BoundsCheck bndCheck;
-    private bool destroyedFlag = false;
+    private bool _destroyedFlag = false;
 
     protected AudioSource hitSound; //sound for when enemy has been hit and destroyed
 
@@ -66,7 +66,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public virtual void Move()
+    public virtual void Move() // this is overriden by each of the enemy children
     {
   
     }
@@ -96,10 +96,10 @@ public class Enemy : MonoBehaviour
                     }
                     notifiedofDestruction = true; // bool which enforces only one pass to Main singleton, ensuring only one PowerUp may spawn
                     Destroy(this.gameObject);
-                    while (destroyedFlag == false) // this loop is a solution to an issue of double-counting the score
+                    while (_destroyedFlag == false) // this loop is a solution to an issue of double-counting the score
                     {
                         ScoreManager.SM.updateCurrScore(score); // add to score
-                        destroyedFlag = true; // once an object has been score-updated, it cannot be score-updated again.
+                        _destroyedFlag = true; // once an object has been score-updated, it cannot be score-updated again.
                     }
                     Debug.Log("Enemy destroyed: " + score); // display debugging score
                 }

@@ -20,11 +20,11 @@ public class PowerUp : MonoBehaviour
     public float birthTime;
 
 
-    private Rigidbody rigid;
-    private BoundsCheck bndCheck;
-    private Renderer cubeRend;
-    private Vector3 velocity;
-    private float gravity = 9.81f;
+    private Rigidbody _rigid;
+    private BoundsCheck _bndCheck;
+    private Renderer _cubeRend;
+    private Vector3 _velocity;
+    private float _gravity = 9.81f;
 
     void Awake()
     {
@@ -32,9 +32,9 @@ public class PowerUp : MonoBehaviour
         cube = transform.Find("Cube").gameObject;
         // find the text mesh and other components for entire PowerUp
         letter = GetComponent<TextMesh>();
-        rigid = GetComponent<Rigidbody>();
-        bndCheck = GetComponent<BoundsCheck>();
-        cubeRend = cube.GetComponent<Renderer>();
+        _rigid = GetComponent<Rigidbody>();
+        _bndCheck = GetComponent<BoundsCheck>();
+        _cubeRend = cube.GetComponent<Renderer>();
         
         // same as no rotation
         transform.rotation = Quaternion.identity;
@@ -48,12 +48,12 @@ public class PowerUp : MonoBehaviour
         int horizontalDirection = Random.Range(0, 2);
         if (horizontalDirection == 0)
         {
-            velocity = new Vector3(Random.Range(horizontalVelocityMinMax.x, horizontalVelocityMinMax.y),
+            _velocity = new Vector3(Random.Range(horizontalVelocityMinMax.x, horizontalVelocityMinMax.y),
                 Random.Range(verticalVelocityMinMax.x, verticalVelocityMinMax.y), 0f);
         }
         else
         {
-            velocity = new Vector3(-1f * Random.Range(horizontalVelocityMinMax.x, horizontalVelocityMinMax.y),
+            _velocity = new Vector3(-1f * Random.Range(horizontalVelocityMinMax.x, horizontalVelocityMinMax.y),
                 Random.Range(verticalVelocityMinMax.x, verticalVelocityMinMax.y), 0f);
         }
     }
@@ -65,8 +65,8 @@ public class PowerUp : MonoBehaviour
 
         //apply falling system similar to gravity
 
-        velocity.y -= gravity * Time.deltaTime;
-        transform.position += velocity * Time.deltaTime;
+        _velocity.y -= _gravity * Time.deltaTime;
+        transform.position += _velocity * Time.deltaTime;
 
         //Fade out the PowerUp over time
 
@@ -79,15 +79,15 @@ public class PowerUp : MonoBehaviour
 
         if (powerUpTime > 0) // use powerUpTime to determine alpha of cube and letter
         {
-            Color c = cubeRend.material.color;
+            Color c = _cubeRend.material.color;
             c.a = 1f - powerUpTime;
-            cubeRend.material.color = c;
+            _cubeRend.material.color = c;
             c = letter.color;
             c.a = 1f - (powerUpTime * 0.5f); // fade out the letter not as much as the cube
             letter.color = c;
         }
 
-        if (!bndCheck.isOnScreen)
+        if (!_bndCheck.isOnScreen)
         {
             // if the powerup drifts off the screen, destroy it
             Destroy(gameObject);
@@ -98,7 +98,7 @@ public class PowerUp : MonoBehaviour
     {
         // grab WeaponDefinition from Main
         WeaponDefinition def = Main.GetWeaponDefinition(wt);
-        cubeRend.material.color = def.color; // set to appropriate color based on WeaponDefinition
+        _cubeRend.material.color = def.color; // set to appropriate color based on WeaponDefinition
         if ((def.letter == "L") || (def.letter == "I")) {
             letter.text = def.letter; // set to appropriate non-weapon powerup letter
         }
